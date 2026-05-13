@@ -14,7 +14,7 @@ it opens the current directory.
 Clone this repo, then link the executable into a directory on your `PATH`:
 
 ```sh
-git clone https://github.com/renlimin/open_ide.git
+git clone https://github.com/0xyanyan/open_ide.git
 cd open_ide
 chmod +x o
 ln -sf "$PWD/o" ~/.local/bin/o
