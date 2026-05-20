@@ -15,7 +15,7 @@ If no path is provided, `o` opens the current directory.
 The recommended installation method is Homebrew:
 
 ```sh
-brew install 0xyanyan/open_ide/open-ide
+brew install yanyansay/open_ide/open-ide
 ```
 
 After installation, the command name is still `o`:
@@ -27,7 +27,7 @@ o .
 You can also tap first, then install:
 
 ```sh
-brew tap 0xyanyan/open_ide
+brew tap yanyansay/open_ide
 brew install open-ide
 ```
 
@@ -37,7 +37,7 @@ If you do not use Homebrew, clone this repo and link `o` into a directory on
 your `PATH`:
 
 ```sh
-git clone https://github.com/0xyanyan/open_ide.git
+git clone https://github.com/yanyansay/open_ide.git
 cd open_ide
 chmod +x o
 ln -sf "$PWD/o" ~/.local/bin/o
@@ -76,8 +76,8 @@ The given path is resolved to an absolute path before being opened.
 `o` chooses an opener in this order:
 
 1. `O_IDE_CMD`: an IDE CLI command, such as `code` or `cursor`.
-2. `O_IDE_APP`: a macOS app name, such as `Antigravity`.
-3. Common installed IDE apps, preferring `Antigravity`.
+2. `O_IDE_APP`: a macOS app name or `.app` path, such as `Antigravity IDE`.
+3. Common installed IDE apps, preferring `Antigravity IDE`.
 4. The macOS `open` fallback.
 
 Examples:
@@ -85,11 +85,13 @@ Examples:
 ```sh
 O_IDE_CMD="code" o .
 O_IDE_APP="Visual Studio Code" o ~/code/project
+O_IDE_APP="/Applications/Antigravity IDE.app" o .
 ```
 
 The built-in app lookup currently checks:
 
 ```text
+Antigravity IDE
 Antigravity
 Cursor
 Visual Studio Code
@@ -127,7 +129,7 @@ If installed with Homebrew:
 
 ```sh
 brew uninstall open-ide
-brew untap 0xyanyan/open_ide
+brew untap yanyansay/open_ide
 ```
 
 If installed manually, remove the command link:

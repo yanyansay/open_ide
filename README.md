@@ -15,7 +15,7 @@ o [文件或文件夹]
 推荐使用 Homebrew 安装：
 
 ```sh
-brew install 0xyanyan/open_ide/open-ide
+brew install yanyansay/open_ide/open-ide
 ```
 
 安装完成后，命令名仍然是 `o`：
@@ -27,7 +27,7 @@ o .
 也可以先添加 tap，再安装：
 
 ```sh
-brew tap 0xyanyan/open_ide
+brew tap yanyansay/open_ide
 brew install open-ide
 ```
 
@@ -36,7 +36,7 @@ brew install open-ide
 如果不使用 Homebrew，可以克隆仓库，并把 `o` 链接到你的 `PATH` 目录里：
 
 ```sh
-git clone https://github.com/0xyanyan/open_ide.git
+git clone https://github.com/yanyansay/open_ide.git
 cd open_ide
 chmod +x o
 ln -sf "$PWD/o" ~/.local/bin/o
@@ -75,8 +75,8 @@ o README.md
 `o` 会按下面的顺序选择打开方式：
 
 1. `O_IDE_CMD`：IDE 的命令行工具，例如 `code` 或 `cursor`。
-2. `O_IDE_APP`：macOS 应用名，例如 `Antigravity`。
-3. 本机已安装的常见 IDE，默认优先 `Antigravity`。
+2. `O_IDE_APP`：macOS 应用名或 `.app` 路径，例如 `Antigravity IDE`。
+3. 本机已安装的常见 IDE，默认优先 `Antigravity IDE`。
 4. macOS 自带的 `open` 回退。
 
 示例：
@@ -84,11 +84,13 @@ o README.md
 ```sh
 O_IDE_CMD="code" o .
 O_IDE_APP="Visual Studio Code" o ~/code/project
+O_IDE_APP="/Applications/Antigravity IDE.app" o .
 ```
 
 当前内置识别这些 IDE：
 
 ```text
+Antigravity IDE
 Antigravity
 Cursor
 Visual Studio Code
@@ -126,7 +128,7 @@ o: path does not exist: missing-path
 
 ```sh
 brew uninstall open-ide
-brew untap 0xyanyan/open_ide
+brew untap yanyansay/open_ide
 ```
 
 如果手动安装，删除命令链接：

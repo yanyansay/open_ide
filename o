@@ -5,7 +5,7 @@ usage() {
   print -u2 "Usage: o [file-or-folder]"
   print -u2
   print -u2 "Environment overrides:"
-  print -u2 "  O_IDE_APP='Antigravity'       macOS app name to open with"
+  print -u2 "  O_IDE_APP='Antigravity IDE'   macOS app name or .app path to open with"
   print -u2 "  O_IDE_CMD='code'              CLI command to open with"
 }
 
@@ -38,8 +38,27 @@ if [[ -n "${O_IDE_CMD:-}" ]]; then
   fi
 fi
 
+open_with_app() {
+  local app="$1"
+  local app_path=""
+
+  if [[ -d "$app" ]]; then
+    app_path="$app"
+  elif [[ -d "/Applications/${app}.app" ]]; then
+    app_path="/Applications/${app}.app"
+  elif [[ -d "$HOME/Applications/${app}.app" ]]; then
+    app_path="$HOME/Applications/${app}.app"
+  fi
+
+  if [[ -n "$app_path" ]]; then
+    open -a "$app_path" "$target"
+  else
+    open -a "$app" "$target"
+  fi
+}
+
 if [[ -n "${O_IDE_APP:-}" ]]; then
-  if open -a "$O_IDE_APP" "$target"; then
+  if open_with_app "$O_IDE_APP"; then
     print "✅ 已用 ${O_IDE_APP} 打开: $target"
     exit 0
   else
@@ -48,12 +67,8 @@ if [[ -n "${O_IDE_APP:-}" ]]; then
   fi
 fi
 
-app_exists() {
-  local app="$1"
-  [[ -d "/Applications/${app}.app" || -d "$HOME/Applications/${app}.app" ]]
-}
-
 for app in \
+  "Antigravity IDE" \
   "Antigravity" \
   "Cursor" \
   "Visual Studio Code" \
@@ -61,14 +76,9 @@ for app in \
   "Windsurf" \
   "Trae" \
   "IntelliJ IDEA"; do
-  if app_exists "$app"; then
-    if open -a "$app" "$target"; then
-      print "✅ 已用 ${app} 打开: $target"
-      exit 0
-    else
-      rc=$?
-      exit "$rc"
-    fi
+  if open_with_app "$app" 2>/dev/null; then
+    print "✅ 已用 ${app} 打开: $target"
+    exit 0
   fi
 done
 
